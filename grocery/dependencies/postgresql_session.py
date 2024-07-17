@@ -1,4 +1,4 @@
-from typing import AsyncGenerator
+from typing import AsyncIterator
 from abc import ABC
 
 from sqlalchemy import text
@@ -19,12 +19,12 @@ class DatabaseConnector:
         )
         self.sessionmaker = async_sessionmaker(self.engine, expire_on_commit=False)
     
-    async def get_session(self) -> AsyncGenerator[AsyncSession]:
+    async def get_session(self) -> AsyncIterator[AsyncSession]:
         async with self.sessionmaker() as session:
             yield session
             await session.commit()
 
-    async def get_session_read_only(self) -> AsyncGenerator[AsyncSession]:
+    async def get_session_read_only(self) -> AsyncIterator[AsyncSession]:
         async with self.sessionmaker() as session:
             await session.execute(text("SET TRANSACTION READ ONLY"))
             yield session
