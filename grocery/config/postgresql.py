@@ -9,6 +9,7 @@ class PostgreSqlConfig(BaseSettings):
     model_config = SettingsConfigDict(
         env_file=".env",
         env_prefix="PG_",
+        extra="ignore",
     )
 
     HOST: str
@@ -16,6 +17,7 @@ class PostgreSqlConfig(BaseSettings):
     USER: str
     PASS: str
     NAME: str
+    POOL_SIZE: int
 
     @property
     def DSN(self) -> str:
