@@ -1,3 +1,6 @@
+.vscode
+
+.local
 .venv
 
 grocery/certs/*
