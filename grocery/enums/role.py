@@ -1,9 +1,6 @@
-from enum import (
-    Enum,
-    auto,
-)
+from enum import Enum
 
 
 class UserRole(Enum):
-    user = auto()
-    admin = auto()
+    user = "user"
+    admin = "admin"
