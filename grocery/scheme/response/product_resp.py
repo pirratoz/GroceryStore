@@ -19,3 +19,5 @@ class ProductResponse(BaseModel):
 
 class ProductManyResponse(BaseModel):
     products: list[ProductResponse]
+    offset: int
+    total: int
