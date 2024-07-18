@@ -18,6 +18,7 @@ class ProductResponse(BaseModel):
 
 
 class ProductManyResponse(BaseModel):
-    products: list[ProductResponse]
+    limit: int
     offset: int
     total: int
+    products: list[ProductResponse]
