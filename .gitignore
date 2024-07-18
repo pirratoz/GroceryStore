@@ -3,4 +3,6 @@
 .local
 .venv
 
+__pycache__
+
 grocery/certs/*

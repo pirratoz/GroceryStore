@@ -7,6 +7,11 @@ from grocery.dependencies import (
     DatabaseConnector,
     Auth,
 )
+from grocery.docs import Tags
+from grocery.endpoints import (
+    users,
+    jwt,
+)
 
 
 def setup_dependency(app: FastAPI, db: DatabaseConnector) -> None:
@@ -16,7 +21,8 @@ def setup_dependency(app: FastAPI, db: DatabaseConnector) -> None:
 
 
 def include_endpoints(app: FastAPI) -> None:
-    ...
+    app.include_router(users, prefix="/users", tags=[Tags.users])
+    app.include_router(jwt, prefix="/jwt", tags=[Tags.jwt])
 
 
 def main() -> None:
