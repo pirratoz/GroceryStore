@@ -1,4 +1,5 @@
 __all__ = [
+    "BaseModel",
     "SubCategory",
     "Category",
     "Product",
@@ -8,6 +9,7 @@ __all__ = [
 ]
 
 
+from grocery.models.base_model import BaseModel
 from grocery.models.subcategory import SubCategory
 from grocery.models.category import Category
 from grocery.models.product import Product
