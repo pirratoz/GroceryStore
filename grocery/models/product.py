@@ -17,7 +17,7 @@ from grocery.models.base_model import (
 class Product(BaseModel):
     __tablename__ = "products"
 
-    id: Mapped[uuid] = mapped_column(primary_key=True, unique=True, index=True, default_factory=uuid4)
+    id: Mapped[uuid] = mapped_column(primary_key=True, unique=True, index=True, default=uuid4)
     subcategory_id: Mapped[uuid] = mapped_column(ForeignKey("subcategories.id"))
     title: Mapped[str]
     slug: Mapped[str] = mapped_column(unique=True, index=True)

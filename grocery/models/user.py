@@ -17,7 +17,7 @@ from grocery.models.base_model import (
 class User(BaseModel):
     __tablename__ = "users"
 
-    id: Mapped[uuid] = mapped_column(primary_key=True, unique=True, default_factory=uuid4)
+    id: Mapped[uuid] = mapped_column(primary_key=True, unique=True, default=uuid4)
     role: Mapped[UserRole]
     email: Mapped[str] = mapped_column(unique=True)
     password: Mapped[bytea]
