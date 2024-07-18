@@ -15,7 +15,7 @@ from jwt.exceptions import (
 )
 
 from grocery.dependencies.postgresql_session import SessionReadOnly
-from grocery.utils.jwt import decode_jwt
+from grocery.utils import Jwt
 
 
 class Auth(ABC):
@@ -34,7 +34,7 @@ class Auth(ABC):
         payload: dict[str, Any]
 
         try:
-            payload = decode_jwt(access_token=credentials.credentials)
+            payload = Jwt.decode(access_token=credentials.credentials)
         except ExpiredSignatureError:
             raise HTTPException(
                 status_code=401,
