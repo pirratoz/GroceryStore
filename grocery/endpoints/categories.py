@@ -1,7 +1,13 @@
+from typing import Annotated
 from uuid import UUID
+import json
 
 from fastapi import (
+    HTTPException,
     APIRouter,
+    UploadFile,
+    Form,
+    File,
     Depends,
 )
 
@@ -9,8 +15,17 @@ from grocery.dependencies import (
     SessionReadOnly,
     Session,
     IsAdmin,
+    MinIoClient,
 )
-from grocery.repositories import CategoryRepository
+from grocery.repositories import (
+    CategoryRepository,
+    ImageRepository,
+)
+from grocery.scheme.request import CategoryCreateRequest
+from grocery.usecases import (
+    CategoryGetAllUseCase,
+    CategoryCreateUseCase,
+)
 from grocery.scheme.response import (
     CategoryManyResponse,
     CategoryResponse,
@@ -26,14 +41,22 @@ async def get_categories(
     offset: int = 0,
     session: SessionReadOnly = Depends()
 ) -> CategoryManyResponse:
-    return ...
+    categories = await CategoryGetAllUseCase(
+        category_repo=CategoryRepository(session)
+    ).execute(limit, offset)
+    return categories
 
 
 @categories.post("/", dependencies=[Depends(IsAdmin.check)])
 async def create_category(
+    category_data: CategoryCreateRequest,
     session: Session = Depends()
 ) -> CategoryResponse:
-    return ...
+    category = await CategoryCreateUseCase(
+        category_repo=CategoryRepository(session),
+        image_repo=ImageRepository(session)
+    ).execute(category_data)
+    return category
 
 
 @categories.patch("/{category_id}", dependencies=[Depends(IsAdmin.check)])

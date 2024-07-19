@@ -5,3 +5,4 @@ class Tags(Enum):
     users = "users"
     jwt = "jwt"
     categories = "categories"
+    images = "images"
