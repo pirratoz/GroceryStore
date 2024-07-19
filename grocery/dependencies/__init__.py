@@ -12,3 +12,4 @@ from grocery.dependencies.postgresql_session import (
     Session,
 )
 from grocery.dependencies.check_auth import Auth
+from grocery.dependencies.check_role import IsAdmin
