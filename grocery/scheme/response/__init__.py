@@ -28,3 +28,4 @@ from grocery.scheme.response.user_resp import (
     UserResponse,
 )
 from grocery.scheme.response.token_resp import TokenResponse
+from grocery.scheme.response.image_resp import ImageResponse
