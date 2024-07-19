@@ -9,7 +9,7 @@ from fastapi import (
 from grocery.scheme.response import TokenResponse
 from grocery.dependencies import SessionReadOnly
 from grocery.repositories import UserRepository
-from grocery.usecases.user_auth import UserAuthUseCase
+from grocery.usecases.user_auth_uc import UserAuthUseCase
 from grocery.scheme.request import UserAuthRequest
 
 
