@@ -12,6 +12,21 @@ services:
             - POSTGRES_DB=grocery
         networks:
             - custom
+    minio:
+        container_name: MinIO
+        image: quay.io/minio/minio:latest
+        ports:
+            - 9000:9000
+            - 9001:9001
+        volumes:
+            - $PWD/.local/data/minio:/data
+        environment:
+            - MINIO_ROOT_USER=grocery
+            - MINIO_ROOT_PASSWORD=grocery8900
+            - MINIO_DEFAULT_BUCKETS=bucket1
+        command: server /data --console-address ":9001"
+        networks:
+            - custom
 
 
 networks:
