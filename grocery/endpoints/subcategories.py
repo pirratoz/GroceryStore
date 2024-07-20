@@ -40,7 +40,7 @@ async def get_subcategories(
     session: SessionReadOnly = Depends()
 ) -> SubCategoryManyResponse:
     subcategories = await SubCategoryGetAllUseCase(
-        category_repo=SubCategoryRepository(session)
+        subcategory_repo=SubCategoryRepository(session)
     ).execute(limit, offset)
     return subcategories
 
@@ -51,7 +51,7 @@ async def create_subcategory(
     session: Session = Depends()
 ) -> SubCategoryResponse:
     subcategory = await SubCategoryCreateUseCase(
-        category_repo=SubCategoryRepository(session),
+        subcategory_repo=SubCategoryRepository(session),
         image_repo=ImageRepository(session)
     ).execute(data)
     return subcategory
@@ -64,8 +64,8 @@ async def partial_update_subcategory(
     session: Session = Depends()
 ) -> SubCategoryResponse:
     subcategory = await SubCategoryPartialUpdateUseCase(
-        SubCategoryRepository(session),
-        ImageRepository(session)
+        subcategory_repo=SubCategoryRepository(session),
+        image_repo=ImageRepository(session)
     ).execute(subcategory_id, data)
     return subcategory
 
@@ -76,6 +76,6 @@ async def delete_subcategory(
     session: Session = Depends()
 ) -> SubCategoryResponse:
     subcategory = await SubCategoryDeleteUseCase(
-        SubCategoryRepository(session)
+        subcategory_repo=SubCategoryRepository(session)
     ).execute(subcategory_id)
     return subcategory
