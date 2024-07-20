@@ -6,3 +6,4 @@ class Tags(Enum):
     jwt = "jwt"
     categories = "categories"
     images = "images"
+    subcategories = "subcategories"
