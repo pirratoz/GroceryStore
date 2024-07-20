@@ -1,10 +1,10 @@
 from grocery.usecases.base_uc import BaseUseCase
 from grocery.repositories.category_repo import CategoryRepository
+from grocery.utils import Images
 from grocery.scheme.response import (
     CategoryManyResponse,
     CategoryResponse,
 )
-from imageworker.worker import get_available_sizes
 
 
 class CategoryGetAllUseCase(BaseUseCase):
@@ -26,13 +26,8 @@ class CategoryGetAllUseCase(BaseUseCase):
                     id=category.id,
                     title=category.title,
                     slug=category.slug,
-                    images=[
-                        f"api/images/{size.path}/{category.image_id}"
-                        for size in get_available_sizes()
-                    ],
-                    subcategories=[
-                        
-                    ]
+                    images=Images.get(category.image_id),
+                    subcategories=[]
                 )
                 for category in categories
             ],

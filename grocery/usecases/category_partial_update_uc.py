@@ -5,12 +5,14 @@ from fastapi import HTTPException
 from grocery.usecases.base_uc import BaseUseCase
 from grocery.scheme.request import CategoryPartialUpdateRequest
 from grocery.scheme.response import CategoryResponse
-from grocery.utils import Slug
+from grocery.utils import (
+    Slug,
+    Images,
+)
 from grocery.repositories import (
     CategoryRepository,
     ImageRepository,
 )
-from imageworker.worker import get_available_sizes
 
 
 class CategoryPartialUpdateUseCase(BaseUseCase):
@@ -32,7 +34,7 @@ class CategoryPartialUpdateUseCase(BaseUseCase):
 
         if not category:
             raise HTTPException(
-                status_code=409,
+                status_code=404,
                 detail="Category not found"
             )
 
@@ -43,7 +45,7 @@ class CategoryPartialUpdateUseCase(BaseUseCase):
             image = await self.image_repo.get_by_id(id=data.image_id)
             if not image:
                 raise HTTPException(
-                status_code=409,
+                status_code=404,
                 detail="Image not found"
             )
 
@@ -53,11 +55,6 @@ class CategoryPartialUpdateUseCase(BaseUseCase):
             id=category.id,
             title=category.title,
             slug=category.slug,
-            images=[
-                f"api/images/{size.path}/{category.image_id}"
-                for size in get_available_sizes()
-            ],
-            subcategories=[
-                
-            ]
+            images=Images.get(category.image_id),
+            subcategories=[]
         )

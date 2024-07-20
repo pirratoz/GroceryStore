@@ -7,8 +7,11 @@ from grocery.repositories import (
     ImageRepository,
 )
 from grocery.scheme.response import CategoryResponse
-from grocery.utils import Slug
-from imageworker.worker import get_available_sizes
+from grocery.utils import (
+    Slug,
+    Images,
+)
+
 
 class CategoryCreateUseCase(BaseUseCase):
     def __init__(
@@ -29,20 +32,23 @@ class CategoryCreateUseCase(BaseUseCase):
                 detail="Slug is not unique"
             )
         
+        image = await self.image_repo.get_by_id(id=category_data.image_id)
+        if not image:
+            raise HTTPException(
+            status_code=404,
+            detail="Image not found"
+        )
+
         category = await self.category_repo.create(
             title=category_data.title,
             slug=category_data.slug,
             image_id=category_data.image_id
         )
-        image = await self.image_repo.get_by_id(id=category_data.image_id)
 
         return CategoryResponse(
             id=category.id,
             title=category.title,
             slug=category.slug,
-            images=[
-                f"api/images/{size.path}/{image.id}"
-                for size in get_available_sizes()
-            ],
+            images=Images.get(category.image_id),
             subcategories=[]
         )
