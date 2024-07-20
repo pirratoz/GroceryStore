@@ -26,13 +26,13 @@ from grocery.scheme.response import ImageResponse
 images = APIRouter()
 
 
-@images.get("/{image_size}/{filename}")
+@images.get("/{size}/{id}")
 async def download_image(
-    image_size: Literal["lg", "md", "sm"],
-    filename: str,
+    size: Literal["lg", "md", "sm"],
+    id: str,
     clientS3: MinIoClient = Depends()
 ) -> StreamingResponse:
-    content = ImageStreamUseCase().execute(f"{image_size}/{filename}", clientS3)
+    content = ImageStreamUseCase().execute(f"{size}/{id}", clientS3)
     return StreamingResponse(
         content=content,
         status_code=200,
