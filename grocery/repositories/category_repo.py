@@ -1,5 +1,4 @@
 from uuid import UUID
-from typing import Any
 
 import sqlalchemy as sa
 
@@ -28,7 +27,7 @@ class CategoryRepository(BaseRepository):
         total = (await self.session.execute(stmt)).scalar_one()
         return total
     
-    async def get_category_by_id(self, id: UUID) -> None:
+    async def get_category_by_id(self, id: UUID) -> CategoryDto | None:
         stmt = sa.select(Category).where(Category.id == id)
         category = (await self.session.execute(stmt)).scalar_one_or_none()
         return CategoryDto.one_from_orm(category)

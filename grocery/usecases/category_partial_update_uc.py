@@ -10,6 +10,7 @@ from grocery.repositories import (
     CategoryRepository,
     ImageRepository,
 )
+from imageworker.worker import get_available_sizes
 
 
 class CategoryPartialUpdateUseCase(BaseUseCase):
@@ -46,4 +47,17 @@ class CategoryPartialUpdateUseCase(BaseUseCase):
                 detail="Image not found"
             )
 
-        return await self.category_repo.update_partial(category_id, data)
+        category = await self.category_repo.update_partial(category_id, data)
+
+        return CategoryResponse(
+            id=category.id,
+            title=category.title,
+            slug=category.slug,
+            images=[
+                f"api/images/{size.path}/{category.image_id}"
+                for size in get_available_sizes()
+            ],
+            subcategories=[
+                
+            ]
+        )
