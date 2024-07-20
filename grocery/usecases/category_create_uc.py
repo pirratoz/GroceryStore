@@ -1,12 +1,4 @@
-from concurrent.futures import ProcessPoolExecutor
-import asyncio
-from uuid import uuid4
-
-from miniopy_async import Minio
-from fastapi import (
-    UploadFile,
-    HTTPException,
-)
+from fastapi import HTTPException
 
 from grocery.usecases.base_uc import BaseUseCase
 from grocery.scheme.request import CategoryCreateRequest
@@ -15,7 +7,6 @@ from grocery.repositories import (
     ImageRepository,
 )
 from grocery.scheme.response import CategoryResponse
-from grocery.config import MinIoConfig
 from imageworker.worker import get_available_sizes
 
 

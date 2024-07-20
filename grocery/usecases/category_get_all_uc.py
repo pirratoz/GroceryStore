@@ -4,6 +4,8 @@ from grocery.scheme.response import (
     CategoryManyResponse,
     CategoryResponse,
 )
+from imageworker.worker import get_available_sizes
+
 
 class CategoryGetAllUseCase(BaseUseCase):
     def __init__(self, category_repo: CategoryRepository) -> None:
@@ -25,7 +27,8 @@ class CategoryGetAllUseCase(BaseUseCase):
                     title=category.title,
                     slug=category.slug,
                     images=[
-                        category.image_id
+                        f"api/images/{size.path}/{category.image_id}"
+                        for size in get_available_sizes()
                     ],
                     subcategories=[
                         
