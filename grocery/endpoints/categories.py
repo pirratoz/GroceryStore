@@ -1,13 +1,7 @@
-from typing import Annotated
 from uuid import UUID
-import json
 
 from fastapi import (
-    HTTPException,
     APIRouter,
-    UploadFile,
-    Form,
-    File,
     Depends,
 )
 
@@ -15,17 +9,20 @@ from grocery.dependencies import (
     SessionReadOnly,
     Session,
     IsAdmin,
-    MinIoClient,
 )
 from grocery.repositories import (
     CategoryRepository,
     ImageRepository,
 )
-from grocery.scheme.request import CategoryCreateRequest
+from grocery.scheme.request import (
+    CategoryCreateRequest,
+    CategoryPartialUpdateRequest,
+)
 from grocery.usecases import (
     CategoryGetAllUseCase,
     CategoryCreateUseCase,
     CategoryDeleteUseCase,
+    CategoryPartialUpdateUseCase,
 )
 from grocery.scheme.response import (
     CategoryManyResponse,
@@ -63,13 +60,18 @@ async def create_category(
 @categories.patch("/{category_id}", dependencies=[Depends(IsAdmin.check)])
 async def partial_update_category(
     category_id: UUID,
+    data: CategoryPartialUpdateRequest,
     session: Session = Depends()
 ) -> CategoryResponse:
-    return ...
+    category = await CategoryPartialUpdateUseCase(
+        CategoryRepository(session),
+        ImageRepository(session)
+    ).execute(category_id, data)
+    return category
 
 
 @categories.delete("/{category_id}", dependencies=[Depends(IsAdmin.check)])
-async def delete_template(
+async def delete_category(
     category_id: UUID,
     session: Session = Depends()
 ) -> CategoryResponse:
