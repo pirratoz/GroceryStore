@@ -4,7 +4,10 @@ from fastapi import HTTPException
 
 from grocery.usecases.base_uc import BaseUseCase
 from grocery.repositories.category_repo import CategoryRepository
-from grocery.scheme.response import CategoryResponse
+from grocery.scheme.response import (
+    SubCategoryResponse,
+    CategoryResponse,
+)
 from grocery.utils import Images
 
 
@@ -27,6 +30,14 @@ class CategoryDeleteUseCase(BaseUseCase):
             title=category.title,
             slug=category.slug,
             images=Images.get(category.image_id),
-            subcategories=[]
+            subcategories=[
+                SubCategoryResponse(
+                    id=subcategory.id,
+                    title=subcategory.title,
+                    slug=subcategory.slug,
+                    images=Images.get(subcategory.image_id)
+                )
+                for subcategory in category.subcategories
+            ]
         )
     

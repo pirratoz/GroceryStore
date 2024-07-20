@@ -4,6 +4,7 @@ from grocery.utils import Images
 from grocery.scheme.response import (
     CategoryManyResponse,
     CategoryResponse,
+    SubCategoryResponse,
 )
 
 
@@ -27,7 +28,15 @@ class CategoryGetAllUseCase(BaseUseCase):
                     title=category.title,
                     slug=category.slug,
                     images=Images.get(category.image_id),
-                    subcategories=[]
+                    subcategories=[
+                        SubCategoryResponse(
+                            id=subcategory.id,
+                            title=subcategory.title,
+                            slug=subcategory.slug,
+                            images=Images.get(subcategory.image_id)
+                        )
+                        for subcategory in category.subcategories
+                    ]
                 )
                 for category in categories
             ],

@@ -4,7 +4,10 @@ from fastapi import HTTPException
 
 from grocery.usecases.base_uc import BaseUseCase
 from grocery.scheme.request import CategoryPartialUpdateRequest
-from grocery.scheme.response import CategoryResponse
+from grocery.scheme.response import (
+    CategoryResponse,
+    SubCategoryResponse,
+)
 from grocery.utils import (
     Slug,
     Images,
@@ -56,5 +59,13 @@ class CategoryPartialUpdateUseCase(BaseUseCase):
             title=category.title,
             slug=category.slug,
             images=Images.get(category.image_id),
-            subcategories=[]
+            subcategories=[
+                SubCategoryResponse(
+                    id=subcategory.id,
+                    title=subcategory.title,
+                    slug=subcategory.slug,
+                    images=Images.get(subcategory.image_id)
+                )
+                for subcategory in category.subcategories
+            ]
         )
