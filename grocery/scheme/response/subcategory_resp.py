@@ -14,4 +14,4 @@ class SubCategoryManyResponse(BaseModel):
     limit: int
     offset: int
     total: int
-    categories: list[SubCategoryResponse]
+    subcategories: list[SubCategoryResponse]
