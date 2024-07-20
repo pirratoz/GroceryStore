@@ -7,8 +7,8 @@ from grocery.repositories import (
     ImageRepository,
 )
 from grocery.scheme.response import CategoryResponse
+from grocery.utils import Slug
 from imageworker.worker import get_available_sizes
-
 
 class CategoryCreateUseCase(BaseUseCase):
     def __init__(
@@ -19,7 +19,9 @@ class CategoryCreateUseCase(BaseUseCase):
         self.category_repo = category_repo
         self.image_repo = image_repo
 
-    async def execute(self, category_data: CategoryCreateRequest) -> CategoryResponse:
+    async def execute(self, category_data: CategoryCreateRequest) -> CategoryResponse:        
+        Slug.validate(category_data.slug)
+
         category = await self.category_repo.get_category_by_slug(category_data.slug)
         if category:
             raise HTTPException(

@@ -25,6 +25,7 @@ from grocery.scheme.request import CategoryCreateRequest
 from grocery.usecases import (
     CategoryGetAllUseCase,
     CategoryCreateUseCase,
+    CategoryDeleteUseCase,
 )
 from grocery.scheme.response import (
     CategoryManyResponse,
@@ -72,4 +73,7 @@ async def delete_template(
     category_id: UUID,
     session: Session = Depends()
 ) -> CategoryResponse:
-    return ...
+    category = await CategoryDeleteUseCase(
+        CategoryRepository(session)
+    ).execute(category_id)
+    return category
