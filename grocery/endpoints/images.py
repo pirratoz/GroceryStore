@@ -1,7 +1,5 @@
-from typing import (
-    Literal,
-    AsyncIterable,
-)
+from typing import Literal
+from uuid import UUID
 
 from fastapi.responses import StreamingResponse
 from fastapi import (
@@ -12,6 +10,7 @@ from fastapi import (
 
 from grocery.dependencies import (
     Session,
+    SessionReadOnly,
     IsAdmin,
     MinIoClient,
 )
@@ -26,13 +25,20 @@ from grocery.scheme.response import ImageResponse
 images = APIRouter()
 
 
-@images.get("/{size}/{id}")
+@images.get("/{size}/{image_id}")
 async def download_image(
     size: Literal["lg", "md", "sm"],
-    id: str,
-    clientS3: MinIoClient = Depends()
+    image_id: UUID,
+    clientS3: MinIoClient = Depends(),
+    session: SessionReadOnly = Depends()
 ) -> StreamingResponse:
-    content = ImageStreamUseCase().execute(f"{size}/{id}", clientS3)
+    content = await ImageStreamUseCase(
+        image_repo=ImageRepository(session)
+    ).execute(
+        size=size,
+        image_id=image_id,
+        clientS3=clientS3
+    )
     return StreamingResponse(
         content=content,
         status_code=200,
