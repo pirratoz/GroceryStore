@@ -9,6 +9,10 @@ __all__ = [
     "CategoryPartialUpdateUseCase",
     "ImageUploadUseCase",
     "ImageStreamUseCase",
+    "SubCategoryPartialUpdateUseCase",
+    "SubCategoryGetAllUseCase",
+    "SubCategoryDeleteUseCase",
+    "SubCategoryCreateUseCase",
 ]
 
 
@@ -25,3 +29,8 @@ from grocery.usecases.category_partial_update_uc import CategoryPartialUpdateUse
 
 from grocery.usecases.image_upload_uc import ImageUploadUseCase
 from grocery.usecases.image_stream_uc import ImageStreamUseCase
+
+from grocery.usecases.subcategory_create_uc import SubCategoryCreateUseCase
+from grocery.usecases.subcategory_delete_uc import SubCategoryDeleteUseCase
+from grocery.usecases.subcategory_get_all_uc import SubCategoryGetAllUseCase
+from grocery.usecases.subcategory_partial_update_uc import SubCategoryPartialUpdateUseCase
