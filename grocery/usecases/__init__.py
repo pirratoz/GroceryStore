@@ -13,6 +13,10 @@ __all__ = [
     "SubCategoryGetAllUseCase",
     "SubCategoryDeleteUseCase",
     "SubCategoryCreateUseCase",
+    "ProductPartialUpdateUseCase",
+    "ProductGetAllUseCase",
+    "ProductCreateUseCase",
+    "ProductDeleteUseCase",
 ]
 
 
@@ -34,3 +38,8 @@ from grocery.usecases.subcategory_partial_update_uc import SubCategoryPartialUpd
 from grocery.usecases.subcategory_get_all_uc import SubCategoryGetAllUseCase
 from grocery.usecases.subcategory_create_uc import SubCategoryCreateUseCase
 from grocery.usecases.subcategory_delete_uc import SubCategoryDeleteUseCase
+
+from grocery.usecases.product_partial_update_uc import ProductPartialUpdateUseCase
+from grocery.usecases.product_get_all_uc import ProductGetAllUseCase
+from grocery.usecases.product_create_uc import ProductCreateUseCase
+from grocery.usecases.product_delete_uc import ProductDeleteUseCase
