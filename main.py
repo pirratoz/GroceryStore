@@ -1,23 +1,23 @@
-from fastapi import FastAPI
 from uvicorn import run as uvicorn_run
+from fastapi import FastAPI
 
 from grocery.dependencies import (
-    Session,
-    SessionReadOnly,
     DatabaseConnector,
-    Auth,
-    IsAdmin,
+    SessionReadOnly,
     MinIoConnector,
     MinIoClient,
+    Session,
+    IsAdmin,
+    Auth,
 )
-from grocery.docs import Tags
 from grocery.endpoints import (
+    categories,
+    subcategories,
+    images,
     users,
     jwt,
-    categories,
-    images,
-    subcategories,
 )
+from grocery.docs import Tags
 
 
 def setup_dependency(

@@ -1,7 +1,7 @@
 from typing import (
-    Any,
     Iterable,
     TypeVar,
+    Any,
 )
 
 from pydantic import BaseModel as PydanticBaseModel

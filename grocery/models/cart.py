@@ -9,8 +9,8 @@ from sqlalchemy.orm import (
 
 from grocery.models.base_model import (
     BaseModel,
-    uuid,
     int_32,
+    uuid,
 )
 
 

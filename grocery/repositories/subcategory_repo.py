@@ -2,8 +2,8 @@ from uuid import UUID
 
 import sqlalchemy as sa
 
-from grocery.repositories.base_repo import BaseRepository
 from grocery.scheme.request import SubCategoryPartialUpdateRequest
+from grocery.repositories.base_repo import BaseRepository
 from grocery.models import SubCategory
 from grocery.dto import SubCategoryDto
 

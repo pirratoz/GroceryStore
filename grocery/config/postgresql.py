@@ -1,7 +1,7 @@
 from pydantic import PostgresDsn
 from pydantic_settings import (
+    SettingsConfigDict,
     BaseSettings,
-    SettingsConfigDict
 )
 
 

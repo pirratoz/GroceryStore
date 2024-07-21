@@ -1,6 +1,6 @@
 from grocery.usecases.base_uc import BaseUseCase
-from grocery.repositories.user_repo import UserRepository
-from grocery.scheme.response.user_resp import (
+from grocery.repositories import UserRepository
+from grocery.scheme.response import (
     UserManyResponse,
     UserResponse,
 )

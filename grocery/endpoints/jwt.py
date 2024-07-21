@@ -6,11 +6,11 @@ from fastapi import (
     Body,
 )
 
+from grocery.usecases.user_auth_uc import UserAuthUseCase
+from grocery.scheme.request import UserAuthRequest
 from grocery.scheme.response import TokenResponse
 from grocery.dependencies import SessionReadOnly
 from grocery.repositories import UserRepository
-from grocery.usecases.user_auth_uc import UserAuthUseCase
-from grocery.scheme.request import UserAuthRequest
 
 
 jwt = APIRouter()

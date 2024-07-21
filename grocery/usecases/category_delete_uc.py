@@ -2,8 +2,8 @@ from uuid import UUID
 
 from fastapi import HTTPException
 
+from grocery.repositories import CategoryRepository
 from grocery.usecases.base_uc import BaseUseCase
-from grocery.repositories.category_repo import CategoryRepository
 from grocery.scheme.response import (
     SubCategoryResponse,
     CategoryResponse,

@@ -1,12 +1,12 @@
 from typing_extensions import Annotated
+from sqlalchemy.dialects.postgresql import BYTEA
 from sqlalchemy.orm import (
     DeclarativeBase,
-    registry
+    registry,
 )
-from sqlalchemy.dialects.postgresql import BYTEA
 from sqlalchemy import (
-    DateTime,
     BigInteger,
+    DateTime,
     Integer,
     String,
     Uuid,

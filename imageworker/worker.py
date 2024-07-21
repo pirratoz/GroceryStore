@@ -2,8 +2,8 @@
 # then the requirement to run it in a separate process will disappear.
 import io
 
-from PIL import Image
 from PIL.ImageFile import ImageFile
+from PIL import Image
 
 from imageworker.photo import PhotoObject
 from imageworker.size import (

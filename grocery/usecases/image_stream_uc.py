@@ -4,9 +4,9 @@ from typing import (
     Literal,
 )
 
+from miniopy_async.error import S3Error
 from fastapi import HTTPException
 from miniopy_async import Minio
-from miniopy_async.error import S3Error
 from aiohttp import (
     ClientSession,
     ClientResponse,

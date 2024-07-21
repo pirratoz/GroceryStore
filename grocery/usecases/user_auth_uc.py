@@ -1,9 +1,9 @@
 from fastapi import HTTPException
 
-from grocery.usecases.base_uc import BaseUseCase
-from grocery.repositories.user_repo import UserRepository
-from grocery.scheme.response.token_resp import TokenResponse
 from grocery.scheme.request import UserAuthRequest
+from grocery.scheme.response import TokenResponse
+from grocery.usecases.base_uc import BaseUseCase
+from grocery.repositories import UserRepository
 from grocery.utils import (
     Password,
     Jwt,

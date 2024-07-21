@@ -2,16 +2,16 @@ from uuid import UUID
 
 from fastapi import HTTPException
 
-from grocery.usecases.base_uc import BaseUseCase
 from grocery.scheme.request import SubCategoryPartialUpdateRequest
 from grocery.scheme.response import SubCategoryResponse
-from grocery.utils import (
-    Slug,
-    Images,
-)
+from grocery.usecases.base_uc import BaseUseCase
 from grocery.repositories import (
     SubCategoryRepository,
     ImageRepository,
+)
+from grocery.utils import (
+    Images,
+    Slug,
 )
 
 

@@ -4,11 +4,8 @@ import sqlalchemy as sa
 from sqlalchemy.orm import joinedload
 
 from grocery.repositories.base_repo import BaseRepository
-from grocery.models import (
-    Category,
-    SubCategory,
-)
 from grocery.scheme.request import CategoryPartialUpdateRequest
+from grocery.models import Category
 from grocery.dto import (
     CategoryWithSubCategoryDto,
     CategoryDto

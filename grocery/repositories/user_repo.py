@@ -3,8 +3,8 @@ from pydantic import EmailStr
 
 from grocery.repositories.base_repo import BaseRepository
 from grocery.enums import UserRole
-from grocery.models import User
 from grocery.dto import UserDto
+from grocery.models import User
 
 
 class UserRepository(BaseRepository):

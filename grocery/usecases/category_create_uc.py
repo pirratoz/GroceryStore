@@ -1,12 +1,12 @@
 from fastapi import HTTPException
 
-from grocery.usecases.base_uc import BaseUseCase
 from grocery.scheme.request import CategoryCreateRequest
+from grocery.scheme.response import CategoryResponse
+from grocery.usecases.base_uc import BaseUseCase
 from grocery.repositories import (
     CategoryRepository,
     ImageRepository,
 )
-from grocery.scheme.response import CategoryResponse
 from grocery.utils import (
     Slug,
     Images,

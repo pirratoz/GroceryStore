@@ -8,6 +8,7 @@ __all__ = [
     "UserManyResponse",
     "UserResponse",
     "TokenResponse",
+    "ImageResponse",
 ]
 
 

@@ -6,5 +6,5 @@ __all__ = [
 
 
 from grocery.config.postgresql import PostgreSqlConfig
-from grocery.config.jwt import JWTConfig
 from grocery.config.minio import MinIoConfig
+from grocery.config.jwt import JWTConfig

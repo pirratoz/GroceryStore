@@ -1,11 +1,11 @@
+from grocery.repositories import CategoryRepository
 from grocery.usecases.base_uc import BaseUseCase
-from grocery.repositories.category_repo import CategoryRepository
-from grocery.utils import Images
 from grocery.scheme.response import (
     CategoryManyResponse,
-    CategoryResponse,
     SubCategoryResponse,
+    CategoryResponse,
 )
+from grocery.utils import Images
 
 
 class CategoryGetAllUseCase(BaseUseCase):

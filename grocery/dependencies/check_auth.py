@@ -1,13 +1,13 @@
 from typing import Any
 from abc import ABC
 
-from fastapi import (
-    HTTPException,
-    Depends,
-)
 from fastapi.security import (
     HTTPAuthorizationCredentials,
     HTTPBearer,
+)
+from fastapi import (
+    HTTPException,
+    Depends,
 )
 from jwt.exceptions import (
     InvalidTokenError,

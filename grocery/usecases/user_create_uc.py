@@ -1,10 +1,10 @@
 from fastapi import HTTPException
 
-from grocery.utils import Password
+from grocery.scheme.request import UserCreateRequest
 from grocery.usecases.base_uc import BaseUseCase
-from grocery.repositories.user_repo import UserRepository
-from grocery.scheme.request.user_create import UserCreateRequest
-from grocery.scheme.response.user_resp import UserResponse
+from grocery.scheme.response import UserResponse
+from grocery.repositories import UserRepository
+from grocery.utils import Password
 
 
 class UserCreateUseCase(BaseUseCase):

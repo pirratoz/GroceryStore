@@ -1,17 +1,17 @@
 from concurrent.futures import ProcessPoolExecutor
-import asyncio
 from uuid import uuid4
+import asyncio
 import io
 
 from miniopy_async import Minio
 from fastapi import UploadFile
 
+from grocery.scheme.response import CategoryResponse
+from grocery.scheme.response import ImageResponse
 from grocery.usecases.base_uc import BaseUseCase
 from grocery.repositories import ImageRepository
-from grocery.scheme.response import ImageResponse
-from grocery.scheme.response import CategoryResponse
-from grocery.config import MinIoConfig
 from imageworker.worker import handle_photo
+from grocery.config import MinIoConfig
 
 
 class ImageUploadUseCase(BaseUseCase):

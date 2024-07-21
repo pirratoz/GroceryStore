@@ -9,8 +9,8 @@ from sqlalchemy.orm import (
 from grocery.enums import UserRole
 from grocery.models.base_model import (
     BaseModel,
-    uuid,
     bytea,
+    uuid,
 )
 
 

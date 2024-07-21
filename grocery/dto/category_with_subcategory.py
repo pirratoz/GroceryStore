@@ -1,7 +1,7 @@
 from uuid import UUID
 
-from grocery.dto.base_dto import BaseModelDto
 from grocery.dto.subcategory import SubCategoryDto
+from grocery.dto.base_dto import BaseModelDto
 
 
 class CategoryWithSubCategoryDto(BaseModelDto):
