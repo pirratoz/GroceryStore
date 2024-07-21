@@ -7,7 +7,6 @@ from grocery.repositories import (
     CategoryRepository,
     ImageRepository,
 )
-from grocery.utils import Slug
 
 
 class CategoryCreateUseCase(BaseUseCase):
@@ -20,8 +19,6 @@ class CategoryCreateUseCase(BaseUseCase):
         self.image_repo = image_repo
 
     async def execute(self, category_data: CategoryCreateRequest) -> CategoryResponse:        
-        Slug.validate(category_data.slug)
-
         category = await self.category_repo.get_category_by_slug(category_data.slug)
         if category:
             raise HTTPException(

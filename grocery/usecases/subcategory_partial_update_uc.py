@@ -9,7 +9,6 @@ from grocery.repositories import (
     SubCategoryRepository,
     ImageRepository,
 )
-from grocery.utils import Slug
 
 
 class SubCategoryPartialUpdateUseCase(BaseUseCase):
@@ -34,9 +33,6 @@ class SubCategoryPartialUpdateUseCase(BaseUseCase):
                 status_code=404,
                 detail="SubCategory not found"
             )
-
-        if data.slug:
-            Slug.validate(data.slug)
         
         if data.image_id:
             image = await self.image_repo.get_by_id(id=data.image_id)

@@ -9,7 +9,6 @@ from grocery.repositories import (
     CategoryRepository,
     ImageRepository,
 )
-from grocery.utils import Slug
 
 
 class CategoryPartialUpdateUseCase(BaseUseCase):
@@ -34,9 +33,6 @@ class CategoryPartialUpdateUseCase(BaseUseCase):
                 status_code=404,
                 detail="Category not found"
             )
-
-        if data.slug:
-            Slug.validate(data.slug)
         
         if data.image_id:
             image = await self.image_repo.get_by_id(id=data.image_id)
