@@ -1,8 +1,10 @@
 __all__ = [
     "SubCategoryPartialUpdateRequest",
     "CategoryPartialUpdateRequest",
+    "ProductPartialUpdateRequest",
     "SubCategoryCreateRequest",
     "CategoryCreateRequest",
+    "ProductCreateRequest",
     "UserCreateRequest",
     "UserAuthRequest",
 ]
@@ -16,3 +18,6 @@ from grocery.scheme.request.category_create import CategoryCreateRequest
 
 from grocery.scheme.request.subcategory_partial_update import SubCategoryPartialUpdateRequest
 from grocery.scheme.request.subcategory_create import SubCategoryCreateRequest
+
+from grocery.scheme.request.product_partial_update import ProductPartialUpdateRequest
+from grocery.scheme.request.product_create import ProductCreateRequest

@@ -5,6 +5,9 @@ from pydantic import (
     Field,
 )
 
+from grocery.dto import ProductWithCategoryDto
+from grocery.utils import ImageUrlsTool
+
 
 class ProductResponse(BaseModel):
     id: UUID
@@ -13,8 +16,21 @@ class ProductResponse(BaseModel):
     images: list[str]
     price: int = Field(description="10000 ~ 100 Rub")
     weight_gramm: int = Field(description="10000 ~ 10 Kg")
-    category: str
-    subcategory: str
+    category_title: str
+    subcategory_title: str
+
+    @staticmethod
+    def get_model(product: ProductWithCategoryDto) -> "ProductResponse":
+        return ProductResponse(
+            id=product.id,
+            title=product.title,
+            slug=product.slug,
+            images=ImageUrlsTool.get(product.image_id),
+            price=product.price,
+            weight_gramm=product.weight_gramm,
+            category_title=product.subcategory.title,
+            subcategory_title=product.subcategory.title
+        )
 
 
 class ProductManyResponse(BaseModel):
