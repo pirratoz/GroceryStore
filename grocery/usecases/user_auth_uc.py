@@ -15,7 +15,7 @@ class UserAuthUseCase(BaseUseCase):
         self.user_repo = user_repo
 
     async def execute(self, user_data: UserAuthRequest) -> TokenResponse:
-        user = await self.user_repo.get_user_by_email(user_data.email)
+        user = await self.user_repo.get_one_by_email(user_data.email)
 
         if user is None:
             raise HTTPException(

@@ -12,7 +12,7 @@ class UserCreateUseCase(BaseUseCase):
         self.user_repo = user_repo
 
     async def execute(self, user_data: UserCreateRequest) -> UserResponse:
-        user = await self.user_repo.get_user_by_email(user_data.email)
+        user = await self.user_repo.get_one_by_email(user_data.email)
 
         if user:
             raise HTTPException(
@@ -25,6 +25,6 @@ class UserCreateUseCase(BaseUseCase):
             password=PasswordTools.create(user_data.password.decode("utf-8")),
             role=user_data.role,
         )
-        
+
         return UserResponse(**user.model_dump())
 

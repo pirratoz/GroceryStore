@@ -12,7 +12,7 @@ class CategoryDeleteUseCase(BaseUseCase):
         self.category_repo = category_repo
 
     async def execute(self, id: UUID) -> CategoryResponse:
-        category = await self.category_repo.get_category_by_id(id)
+        category = await self.category_repo.get_one_by_id(id)
 
         if not category:
             raise HTTPException(

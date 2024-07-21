@@ -19,14 +19,14 @@ class CategoryCreateUseCase(BaseUseCase):
         self.image_repo = image_repo
 
     async def execute(self, category_data: CategoryCreateRequest) -> CategoryResponse:        
-        category = await self.category_repo.get_category_by_slug(category_data.slug)
+        category = await self.category_repo.get_one_by_slug(category_data.slug)
         if category:
             raise HTTPException(
                 status_code=409,
                 detail="Slug is not unique"
             )
         
-        image = await self.image_repo.get_by_id(id=category_data.image_id)
+        image = await self.image_repo.get_one_by_id(category_data.image_id)
         if not image:
             raise HTTPException(
             status_code=404,

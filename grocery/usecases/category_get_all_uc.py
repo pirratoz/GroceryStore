@@ -10,9 +10,13 @@ class CategoryGetAllUseCase(BaseUseCase):
     def __init__(self, category_repo: CategoryRepository) -> None:
         self.category_repo = category_repo
 
-    async def execute(self, limit: int, offset: int) -> CategoryManyResponse:
-        total = await self.category_repo.get_count_record()
-        categories = await self.category_repo.get_categories_by_offset(
+    async def execute(
+        self,
+        limit: int | None = None,
+        offset: int | None = None
+    ) -> CategoryManyResponse:
+        total = await self.category_repo.get_count_records()
+        categories = await self.category_repo.get_all(
             limit=limit,
             offset=offset,
         )

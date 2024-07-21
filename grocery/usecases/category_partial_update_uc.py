@@ -26,7 +26,7 @@ class CategoryPartialUpdateUseCase(BaseUseCase):
         data: CategoryPartialUpdateRequest
     ) -> CategoryResponse:
         
-        category = await self.category_repo.get_category_by_id(category_id)
+        category = await self.category_repo.get_one_by_id(category_id)
 
         if not category:
             raise HTTPException(
@@ -35,13 +35,16 @@ class CategoryPartialUpdateUseCase(BaseUseCase):
             )
         
         if data.image_id:
-            image = await self.image_repo.get_by_id(id=data.image_id)
+            image = await self.image_repo.get_one_by_id(data.image_id)
             if not image:
                 raise HTTPException(
                 status_code=404,
                 detail="Image not found"
             )
 
-        category = await self.category_repo.update_partial(category_id, data)
+        category = await self.category_repo.update_partial(
+            id=category_id,
+            kwargs=data.model_dump(exclude_none=True)
+        )
 
         return CategoryResponse.get_model_with_subcategories(category)

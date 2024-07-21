@@ -7,14 +7,18 @@ from grocery.models import Image
 from grocery.dto import ImageDto
 
 
-class ImageRepository(BaseRepository):
+class ImageRepository(BaseRepository):    
+    async def get_one_by_id(self, id: UUID) -> ImageDto | None:
+        stmt = (
+            sa
+            .select(Image)
+            .where(Image.id == id)
+        )
+        image = (await self.session.execute(stmt)).scalar_one_or_none()
+        return ImageDto.one_from_orm(image)
+
     async def create(self, *, filename: str) -> ImageDto:
         image = Image(filename=filename)
         self.session.add(image)
         await self.session.flush()
-        return ImageDto.one_from_orm(image)
-    
-    async def get_by_id(self, *, id: UUID) -> ImageDto | None:
-        stmt = sa.select(Image).where(Image.id == id)
-        image = (await self.session.execute(stmt)).scalar_one_or_none()
         return ImageDto.one_from_orm(image)

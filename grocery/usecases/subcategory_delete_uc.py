@@ -12,7 +12,7 @@ class SubCategoryDeleteUseCase(BaseUseCase):
         self.subcategory_repo = subcategory_repo
 
     async def execute(self, id: UUID) -> SubCategoryResponse:
-        subcategory = await self.subcategory_repo.get_subcategory_by_id(id)
+        subcategory = await self.subcategory_repo.get_one_by_id(id)
 
         if not subcategory:
             raise HTTPException(

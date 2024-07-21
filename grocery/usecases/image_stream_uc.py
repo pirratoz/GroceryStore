@@ -55,7 +55,7 @@ class ImageStreamUseCase(BaseUseCase):
         image_id: UUID,
         clientS3: Minio
     ) -> AsyncIterator[bytes]:        
-        image = await self.image_repo.get_by_id(id=image_id)
+        image = await self.image_repo.get_one_by_id(image_id)
         if not image:
             raise HTTPException(
                 status_code=404,
