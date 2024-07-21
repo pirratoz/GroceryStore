@@ -13,7 +13,7 @@ from grocery.repositories import (
     ImageRepository,
 )
 from grocery.utils import (
-    Images,
+    ImageUrlsTool,
     Slug,
 )
 
@@ -58,13 +58,13 @@ class CategoryPartialUpdateUseCase(BaseUseCase):
             id=category.id,
             title=category.title,
             slug=category.slug,
-            images=Images.get(category.image_id),
+            images=ImageUrlsTool.get(category.image_id),
             subcategories=[
                 SubCategoryResponse(
                     id=subcategory.id,
                     title=subcategory.title,
                     slug=subcategory.slug,
-                    images=Images.get(subcategory.image_id)
+                    images=ImageUrlsTool.get(subcategory.image_id)
                 )
                 for subcategory in category.subcategories
             ]

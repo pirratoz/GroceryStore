@@ -8,7 +8,7 @@ from grocery.scheme.response import (
     SubCategoryResponse,
     CategoryResponse,
 )
-from grocery.utils import Images
+from grocery.utils import ImageUrlsTool
 
 
 class CategoryDeleteUseCase(BaseUseCase):
@@ -29,13 +29,13 @@ class CategoryDeleteUseCase(BaseUseCase):
             id=category.id,
             title=category.title,
             slug=category.slug,
-            images=Images.get(category.image_id),
+            images=ImageUrlsTool.get(category.image_id),
             subcategories=[
                 SubCategoryResponse(
                     id=subcategory.id,
                     title=subcategory.title,
                     slug=subcategory.slug,
-                    images=Images.get(subcategory.image_id)
+                    images=ImageUrlsTool.get(subcategory.image_id)
                 )
                 for subcategory in category.subcategories
             ]

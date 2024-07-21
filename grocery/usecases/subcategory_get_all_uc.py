@@ -4,7 +4,7 @@ from grocery.scheme.response import (
     SubCategoryManyResponse,
     SubCategoryResponse,
 )
-from grocery.utils import Images
+from grocery.utils import ImageUrlsTool
 
 
 class SubCategoryGetAllUseCase(BaseUseCase):
@@ -26,7 +26,7 @@ class SubCategoryGetAllUseCase(BaseUseCase):
                     id=category.id,
                     title=category.title,
                     slug=category.slug,
-                    images=Images.get(category.image_id)
+                    images=ImageUrlsTool.get(category.image_id)
                 )
                 for category in subcategories
             ]

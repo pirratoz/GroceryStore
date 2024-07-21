@@ -3,7 +3,7 @@ from uuid import UUID
 from imageworker.worker import get_available_sizes
 
 
-class Images:
+class ImageUrlsTool:
     @staticmethod
     def get(image_id: UUID) -> list[str]:
         return [

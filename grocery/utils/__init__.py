@@ -1,12 +1,12 @@
 __all__ = [
-    "Password",
-    "Images",
+    "PasswordTools",
+    "ImageUrlsTool",
+    "JwtTools",
     "Slug",
-    "Jwt",
 ]
 
 
-from grocery.utils.password import Password
-from grocery.utils.images import Images
+from grocery.utils.password import PasswordTools
+from grocery.utils.images import ImageUrlsTool
+from grocery.utils.jwt import JwtTools
 from grocery.utils.slug import Slug
-from grocery.utils.jwt import Jwt

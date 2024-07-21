@@ -1,7 +1,7 @@
 import bcrypt
 
 
-class Password:
+class PasswordTools:
     @staticmethod
     def create(password: str) -> bytes:
         return bcrypt.hashpw(

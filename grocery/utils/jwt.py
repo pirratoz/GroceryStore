@@ -13,7 +13,7 @@ from jwt import (
 from grocery.config import JWTConfig
 
 
-class Jwt:
+class JwtTools:
     @staticmethod
     def encode(
         payload: dict[str, Any],

@@ -5,8 +5,8 @@ from grocery.scheme.response import TokenResponse
 from grocery.usecases.base_uc import BaseUseCase
 from grocery.repositories import UserRepository
 from grocery.utils import (
-    Password,
-    Jwt,
+    PasswordTools,
+    JwtTools,
 )
 
 
@@ -23,20 +23,17 @@ class UserAuthUseCase(BaseUseCase):
                 detail="Email or password incorrect"
             )
         
-        if not Password.verify(user_data.password, user.password):
+        if not PasswordTools.verify(user_data.password, user.password):
             raise HTTPException(
                 status_code=401,
                 detail="Email or password incorrect"
             )
         
-        token = Jwt.encode(
+        token = JwtTools.encode(
             {
                 "id": str(user.id),
                 "role": user.role.value
             }
         )
 
-        return TokenResponse(
-            access_token=token,
-            token_type="Bearer"
-        )
+        return TokenResponse(access_token=token)

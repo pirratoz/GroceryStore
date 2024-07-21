@@ -4,7 +4,7 @@ from grocery.scheme.request import UserCreateRequest
 from grocery.usecases.base_uc import BaseUseCase
 from grocery.scheme.response import UserResponse
 from grocery.repositories import UserRepository
-from grocery.utils import Password
+from grocery.utils import PasswordTools
 
 
 class UserCreateUseCase(BaseUseCase):
@@ -17,7 +17,7 @@ class UserCreateUseCase(BaseUseCase):
         if user is None:
             user = await self.user_repo.create(
                 email=user_data.email,
-                password=Password.create(user_data.password.decode("utf-8")),
+                password=PasswordTools.create(user_data.password.decode("utf-8")),
                 role=user_data.role,
             )
             return UserResponse.model_validate(user.model_dump())

@@ -8,7 +8,7 @@ from grocery.repositories import (
     ImageRepository,
 )
 from grocery.utils import (
-    Images,
+    ImageUrlsTool,
     Slug,
 )
 
@@ -50,5 +50,5 @@ class SubCategoryCreateUseCase(BaseUseCase):
             id=subcategory.id,
             title=subcategory.title,
             slug=subcategory.slug,
-            images=Images.get(image.id)
+            images=ImageUrlsTool.get(image.id)
         )
