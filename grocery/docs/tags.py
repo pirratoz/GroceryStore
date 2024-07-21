@@ -7,3 +7,4 @@ class Tags(Enum):
     categories = "categories"
     images = "images"
     subcategories = "subcategories"
+    products = "products"
