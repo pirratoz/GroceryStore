@@ -7,10 +7,7 @@ from grocery.repositories import (
     SubCategoryRepository,
     ImageRepository,
 )
-from grocery.utils import (
-    ImageUrlsTool,
-    Slug,
-)
+from grocery.utils import Slug
 
 
 class SubCategoryCreateUseCase(BaseUseCase):
@@ -46,9 +43,4 @@ class SubCategoryCreateUseCase(BaseUseCase):
             image_id=data.image_id
         )
 
-        return SubCategoryResponse(
-            id=subcategory.id,
-            title=subcategory.title,
-            slug=subcategory.slug,
-            images=ImageUrlsTool.get(image.id)
-        )
+        return SubCategoryResponse.get_model(subcategory)

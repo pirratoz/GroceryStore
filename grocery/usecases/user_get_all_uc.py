@@ -16,12 +16,13 @@ class UserGetAllUseCase(BaseUseCase):
             limit=limit,
             offset=offset,
         )
+        
         return UserManyResponse(
             limit=limit,
             offset=offset,
             total=total,
             users=[
-                UserResponse(id=user.id, email=user.email, role=user.role)
+                UserResponse(**user.model_dump())
                 for user in users
             ],
         )

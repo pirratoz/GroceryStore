@@ -3,12 +3,8 @@ from uuid import UUID
 from fastapi import HTTPException
 
 from grocery.repositories import CategoryRepository
+from grocery.scheme.response import CategoryResponse
 from grocery.usecases.base_uc import BaseUseCase
-from grocery.scheme.response import (
-    SubCategoryResponse,
-    CategoryResponse,
-)
-from grocery.utils import ImageUrlsTool
 
 
 class CategoryDeleteUseCase(BaseUseCase):
@@ -25,19 +21,6 @@ class CategoryDeleteUseCase(BaseUseCase):
             )
 
         await self.category_repo.delete_by_id(id)
-        return CategoryResponse(
-            id=category.id,
-            title=category.title,
-            slug=category.slug,
-            images=ImageUrlsTool.get(category.image_id),
-            subcategories=[
-                SubCategoryResponse(
-                    id=subcategory.id,
-                    title=subcategory.title,
-                    slug=subcategory.slug,
-                    images=ImageUrlsTool.get(subcategory.image_id)
-                )
-                for subcategory in category.subcategories
-            ]
-        )
+
+        return CategoryResponse.get_model_with_subcategories(category)
     

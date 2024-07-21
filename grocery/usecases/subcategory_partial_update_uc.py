@@ -9,10 +9,7 @@ from grocery.repositories import (
     SubCategoryRepository,
     ImageRepository,
 )
-from grocery.utils import (
-    ImageUrlsTool,
-    Slug,
-)
+from grocery.utils import Slug
 
 
 class SubCategoryPartialUpdateUseCase(BaseUseCase):
@@ -51,9 +48,4 @@ class SubCategoryPartialUpdateUseCase(BaseUseCase):
 
         subcategory = await self.subcategory_repo.update_partial(subcategory_id, data)
 
-        return SubCategoryResponse(
-            id=subcategory.id,
-            title=subcategory.title,
-            slug=subcategory.slug,
-            images=ImageUrlsTool.get(subcategory.image_id)
-        )
+        return SubCategoryResponse.get_model(subcategory)

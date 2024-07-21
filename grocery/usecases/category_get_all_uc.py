@@ -2,10 +2,8 @@ from grocery.repositories import CategoryRepository
 from grocery.usecases.base_uc import BaseUseCase
 from grocery.scheme.response import (
     CategoryManyResponse,
-    SubCategoryResponse,
     CategoryResponse,
 )
-from grocery.utils import ImageUrlsTool
 
 
 class CategoryGetAllUseCase(BaseUseCase):
@@ -18,27 +16,13 @@ class CategoryGetAllUseCase(BaseUseCase):
             limit=limit,
             offset=offset,
         )
+
         return CategoryManyResponse(
             limit=limit,
             offset=offset,
             total=total,
             categories=[
-                CategoryResponse(
-                    id=category.id,
-                    title=category.title,
-                    slug=category.slug,
-                    images=ImageUrlsTool.get(category.image_id),
-                    subcategories=[
-                        SubCategoryResponse(
-                            id=subcategory.id,
-                            title=subcategory.title,
-                            slug=subcategory.slug,
-                            images=ImageUrlsTool.get(subcategory.image_id)
-                        )
-                        for subcategory in category.subcategories
-                    ]
-                )
+                CategoryResponse.get_model_with_subcategories(category)
                 for category in categories
-            ],
+            ]
         )
-

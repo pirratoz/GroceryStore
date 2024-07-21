@@ -7,10 +7,7 @@ from grocery.repositories import (
     CategoryRepository,
     ImageRepository,
 )
-from grocery.utils import (
-    ImageUrlsTool,
-    Slug,
-)
+from grocery.utils import Slug
 
 
 class CategoryCreateUseCase(BaseUseCase):
@@ -45,10 +42,5 @@ class CategoryCreateUseCase(BaseUseCase):
             image_id=category_data.image_id
         )
 
-        return CategoryResponse(
-            id=category.id,
-            title=category.title,
-            slug=category.slug,
-            images=ImageUrlsTool.get(category.image_id),
-            subcategories=[]
-        )
+        return CategoryResponse.get_model_without_subcategories(category)
+

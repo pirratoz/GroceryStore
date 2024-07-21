@@ -3,19 +3,13 @@ from uuid import UUID
 from fastapi import HTTPException
 
 from grocery.scheme.request import CategoryPartialUpdateRequest
+from grocery.scheme.response import CategoryResponse
 from grocery.usecases.base_uc import BaseUseCase
-from grocery.scheme.response import (
-    SubCategoryResponse,
-    CategoryResponse,
-)
 from grocery.repositories import (
     CategoryRepository,
     ImageRepository,
 )
-from grocery.utils import (
-    ImageUrlsTool,
-    Slug,
-)
+from grocery.utils import Slug
 
 
 class CategoryPartialUpdateUseCase(BaseUseCase):
@@ -54,18 +48,4 @@ class CategoryPartialUpdateUseCase(BaseUseCase):
 
         category = await self.category_repo.update_partial(category_id, data)
 
-        return CategoryResponse(
-            id=category.id,
-            title=category.title,
-            slug=category.slug,
-            images=ImageUrlsTool.get(category.image_id),
-            subcategories=[
-                SubCategoryResponse(
-                    id=subcategory.id,
-                    title=subcategory.title,
-                    slug=subcategory.slug,
-                    images=ImageUrlsTool.get(subcategory.image_id)
-                )
-                for subcategory in category.subcategories
-            ]
-        )
+        return CategoryResponse.get_model_with_subcategories(category)

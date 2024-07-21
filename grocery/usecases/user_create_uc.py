@@ -14,15 +14,17 @@ class UserCreateUseCase(BaseUseCase):
     async def execute(self, user_data: UserCreateRequest) -> UserResponse:
         user = await self.user_repo.get_user_by_email(user_data.email)
 
-        if user is None:
-            user = await self.user_repo.create(
-                email=user_data.email,
-                password=PasswordTools.create(user_data.password.decode("utf-8")),
-                role=user_data.role,
+        if user:
+            raise HTTPException(
+                status_code=409,
+                detail="User Already exists"
             )
-            return UserResponse.model_validate(user.model_dump())
 
-        raise HTTPException(
-            status_code=409,
-            detail="User Already exists"
+        user = await self.user_repo.create(
+            email=user_data.email,
+            password=PasswordTools.create(user_data.password.decode("utf-8")),
+            role=user_data.role,
         )
+        
+        return UserResponse(**user.model_dump())
+
