@@ -32,6 +32,7 @@ class UserAuthUseCase(BaseUseCase):
         token = JwtTools.encode(
             {
                 "id": str(user.id),
+                "email": user.email,
                 "role": user.role.value
             }
         )
