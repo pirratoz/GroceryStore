@@ -50,7 +50,7 @@ class ProductPartialUpdateUseCase(BaseUseCase):
             if product:
                 raise HTTPException(
                     status_code=409,
-                    detail="Slug is not unique"
+                    detail="Slug already exists"
                 )
 
         product = await self.product_repo.update_partial(

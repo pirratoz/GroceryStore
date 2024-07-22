@@ -26,7 +26,7 @@ class ProductCreateUseCase(BaseUseCase):
         if product:
             raise HTTPException(
                 status_code=409,
-                detail="Slug is not unique"
+                detail="Slug already exists"
             )
         
         subcategory = await self.subcategory_repo.get_one_by_id(data.subcategory_id)

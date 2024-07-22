@@ -23,7 +23,7 @@ class SubCategoryCreateUseCase(BaseUseCase):
         if subcategory:
             raise HTTPException(
                 status_code=409,
-                detail="Slug is not unique"
+                detail="Slug already exists"
             )
         
         image = await self.image_repo.get_one_by_id(data.image_id)
