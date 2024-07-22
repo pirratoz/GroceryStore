@@ -1,5 +1,6 @@
 __all__ = [
     "CategoryWithSubCategoryDto",
+    "SubCategoryWithCategoryDto",
     "ProductWithCategoryDto",
     "SubCategoryDto",
     "BaseModelDto",
@@ -11,6 +12,7 @@ __all__ = [
 
 
 from grocery.dto.category_with_subcategory import CategoryWithSubCategoryDto
+from grocery.dto.subcategory_with_category import SubCategoryWithCategoryDto
 from grocery.dto.product_with_category import ProductWithCategoryDto
 from grocery.dto.subcategory import SubCategoryDto
 from grocery.dto.base_dto import BaseModelDto

@@ -28,7 +28,7 @@ class ProductResponse(BaseModel):
             images=ImageUrlsTool.get(product.image_id),
             price=product.price,
             weight_gramm=product.weight_gramm,
-            category_title=product.subcategory.title,
+            category_title=product.subcategory.category.title,
             subcategory_title=product.subcategory.title
         )
 
