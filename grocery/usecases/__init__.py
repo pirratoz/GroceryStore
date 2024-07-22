@@ -20,6 +20,9 @@ __all__ = [
     "CategoryGetSubcategoriesBySlugUseCase",
     "SubCategoryGetProductsBySlugUseCase",
     "ProductGetProductBySlugUseCase",
+    "CartDeleteUseCase",
+    "CartCreateUseCase",
+    "CartGetUseCase",
 ]
 
 
@@ -50,3 +53,7 @@ from grocery.usecases.product_delete_uc import ProductDeleteUseCase
 from grocery.usecases.category_get_subcategories_by_slug_uc import CategoryGetSubcategoriesBySlugUseCase
 from grocery.usecases.subcategory_get_products_by_slug_uc import SubCategoryGetProductsBySlugUseCase
 from grocery.usecases.product_get_product_by_slug_uc import ProductGetProductBySlugUseCase
+
+from grocery.usecases.cart_delete_uc import CartDeleteUseCase
+from grocery.usecases.cart_create_uc import CartCreateUseCase
+from grocery.usecases.cart_get_uc import CartGetUseCase
