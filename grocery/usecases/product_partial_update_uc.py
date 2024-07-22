@@ -41,17 +41,17 @@ class ProductPartialUpdateUseCase(BaseUseCase):
             image = await self.image_repo.get_one_by_id(data.image_id)
             if not image:
                 raise HTTPException(
-                status_code=404,
-                detail="Image not found"
-            )
+                    status_code=404,
+                    detail="Image not found"
+                )
 
         if data.slug:
             product = await self.product_repo.get_one_by_slug(data.slug)
             if product:
                 raise HTTPException(
-                status_code=409,
-                detail="Slug is not unique"
-            )
+                    status_code=409,
+                    detail="Slug is not unique"
+                )
 
         product = await self.product_repo.update_partial(
             id=product_id,

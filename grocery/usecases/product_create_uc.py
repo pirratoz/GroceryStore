@@ -39,9 +39,9 @@ class ProductCreateUseCase(BaseUseCase):
         image = await self.image_repo.get_one_by_id(data.image_id)
         if not image:
             raise HTTPException(
-            status_code=404,
-            detail="Image not found"
-        )
+                status_code=404,
+                detail="Image not found"
+            )
 
         product = await self.product_repo.create(
             subcategory_id=data.subcategory_id,

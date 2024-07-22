@@ -29,9 +29,9 @@ class CategoryCreateUseCase(BaseUseCase):
         image = await self.image_repo.get_one_by_id(category_data.image_id)
         if not image:
             raise HTTPException(
-            status_code=404,
-            detail="Image not found"
-        )
+                status_code=404,
+                detail="Image not found"
+            )
 
         category = await self.category_repo.create(
             title=category_data.title,

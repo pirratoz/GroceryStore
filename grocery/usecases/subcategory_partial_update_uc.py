@@ -38,9 +38,9 @@ class SubCategoryPartialUpdateUseCase(BaseUseCase):
             image = await self.image_repo.get_one_by_id(data.image_id)
             if not image:
                 raise HTTPException(
-                status_code=404,
-                detail="Image not found"
-            )
+                    status_code=404,
+                    detail="Image not found"
+                )
 
         subcategory = await self.subcategory_repo.update_partial(
             id=subcategory_id,
