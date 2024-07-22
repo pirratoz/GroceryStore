@@ -1,5 +1,8 @@
-# This code must be moved to a separate repository and microservice
-# then the requirement to run it in a separate process will disappear.
+# =================================================== #
+# 1. It's better not to use python to edit pictures   #
+# 2. Move it to a separate microservice so as not to  #
+#    launch heavy processes from under asyncio        #
+# =================================================== #
 import io
 
 from PIL.ImageFile import ImageFile
