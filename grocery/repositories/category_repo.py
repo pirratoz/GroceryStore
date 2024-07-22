@@ -35,7 +35,7 @@ class CategoryRepository(BaseRepository):
             .options(joinedload(Category.subcategories))
             .where(Category.slug == slug)
         )
-        category = (await self.session.execute(stmt)).scalar_one_or_none()
+        category = (await self.session.execute(stmt)).unique().scalar_one_or_none()
         return CategoryWithSubCategoryDto.one_from_orm(category)
 
     async def get_count_records(self) -> int:
