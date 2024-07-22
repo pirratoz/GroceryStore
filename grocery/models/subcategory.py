@@ -22,6 +22,6 @@ class SubCategory(BaseModel):
     slug: Mapped[str] = mapped_column(unique=True)
     image_id: Mapped[uuid] = mapped_column(ForeignKey("images.id"))
 
-    categories = relationship("Category", back_populates="subcategories")
+    category = relationship("Category", back_populates="subcategories")
     products = relationship("Product", back_populates="subcategory")
     image = relationship("Image", back_populates="subcategory")
