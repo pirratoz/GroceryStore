@@ -12,6 +12,8 @@ from grocery.dependencies import (
 )
 from grocery.repositories import (
     SubCategoryRepository,
+    CategoryRepository,
+    ProductRepository,
     ImageRepository,
 )
 from grocery.usecases import (
@@ -19,6 +21,7 @@ from grocery.usecases import (
     SubCategoryGetAllUseCase,
     SubCategoryCreateUseCase,
     SubCategoryDeleteUseCase,
+    SubCategoryGetProductsBySlugUseCase,
 )
 from grocery.scheme.request import (
     SubCategoryPartialUpdateRequest,
@@ -26,6 +29,7 @@ from grocery.scheme.request import (
 )
 from grocery.scheme.response import (
     SubCategoryManyResponse,
+    ProductManyResponse,
     SubCategoryResponse,
 )
 
@@ -43,6 +47,26 @@ async def get_subcategories(
         subcategory_repo=SubCategoryRepository(session)
     ).execute(limit, offset)
     return subcategories
+
+
+@subcategories.get("/{subcategory}")
+async def get_products(
+    category: str,
+    subcategory: str,
+    limit: int = 10,
+    offset: int = 0,
+    session: SessionReadOnly = Depends()
+) -> ProductManyResponse:
+    return await SubCategoryGetProductsBySlugUseCase(
+        category_repo=CategoryRepository(session),
+        subcategory_repo=SubCategoryRepository(session),
+        product_repo=ProductRepository(session)
+    ).execute(
+        slug_category=category,
+        slug_subcategory=subcategory,
+        limit=limit,
+        offset=offset
+    )
 
 
 @subcategories.post("/", dependencies=[Depends(IsAdmin.check)])

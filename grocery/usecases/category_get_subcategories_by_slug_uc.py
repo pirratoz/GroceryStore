@@ -11,7 +11,7 @@ from grocery.repositories import (
 )
 
 
-class CatalogGetSubcategoriesUseCase(BaseUseCase):
+class CategoryGetSubcategoriesBySlugUseCase(BaseUseCase):
     def __init__(
         self,
         category_repo: CategoryRepository,

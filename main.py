@@ -14,7 +14,6 @@ from grocery.endpoints import (
     subcategories,
     categories,
     products,
-    catalog,
     images,
     users,
     jwt,
@@ -41,7 +40,6 @@ def include_endpoints(app: FastAPI) -> None:
     app.include_router(images, prefix="/api/images", tags=[Tags.images])
     app.include_router(subcategories, prefix="/subcategories", tags=[Tags.subcategories])
     app.include_router(products, prefix="/products", tags=[Tags.products])
-    app.include_router(catalog, prefix="/catalog", tags=[Tags.catalog])
 
 
 def main() -> None:

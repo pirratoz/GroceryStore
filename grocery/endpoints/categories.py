@@ -11,10 +11,12 @@ from grocery.dependencies import (
     IsAdmin,
 )
 from grocery.repositories import (
+    SubCategoryRepository,
     CategoryRepository,
     ImageRepository,
 )
 from grocery.usecases import (
+    CategoryGetSubcategoriesBySlugUseCase,
     CategoryPartialUpdateUseCase,
     CategoryGetAllUseCase,
     CategoryCreateUseCase,
@@ -25,12 +27,31 @@ from grocery.scheme.request import (
     CategoryCreateRequest,
 )
 from grocery.scheme.response import (
+    SubCategoryManyResponse,
     CategoryManyResponse,
     CategoryResponse,
 )
 
 
 categories = APIRouter()
+
+
+@categories.get("/{category}")
+async def get_subcategories(
+    category: str,
+    limit: int = 10,
+    offset: int = 0,
+    session: SessionReadOnly = Depends()
+) -> SubCategoryManyResponse:
+    subcategories = await CategoryGetSubcategoriesBySlugUseCase(
+        category_repo=CategoryRepository(session),
+        subcategory_repo=SubCategoryRepository(session)
+    ).execute(
+        slug_category=category,
+        limit=limit,
+        offset=offset
+    )
+    return subcategories
 
 
 @categories.get("/")
