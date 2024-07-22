@@ -1,5 +1,6 @@
 from uuid import UUID
 
+from fastapi.responses import JSONResponse
 from fastapi import (
     APIRouter,
     Depends,
@@ -96,7 +97,7 @@ async def delete_category(
     category_id: UUID,
     session: Session = Depends()
 ) -> CategoryResponse:
-    category = await CategoryDeleteUseCase(
+    await CategoryDeleteUseCase(
         CategoryRepository(session)
     ).execute(category_id)
-    return category
+    return JSONResponse(content={}, status_code=204)
