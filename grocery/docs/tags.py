@@ -8,3 +8,5 @@ class Tags(Enum):
     images = "images"
     subcategories = "subcategories"
     products = "products"
+    catalog = "catalog"
+    cart = "cart"
