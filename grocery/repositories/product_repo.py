@@ -1,9 +1,13 @@
 from uuid import UUID
 
+from sqlalchemy.orm import joinedload
 import sqlalchemy as sa
 
 from grocery.repositories.base_repo import BaseRepository
-from grocery.models import Product
+from grocery.models import (
+    SubCategory,
+    Product,
+)
 from grocery.dto import (
     ProductWithCategoryDto,
     ProductDto,
@@ -15,16 +19,52 @@ class ProductRepository(BaseRepository):
         self,
         limit: int | None = None,
         offset: int | None = None
-    ) -> list[ProductDto]:
+    ) -> list[ProductWithCategoryDto]:
         stmt = (
             sa
             .select(Product)
+            .options(
+                joinedload(Product.subcategory).joinedload(SubCategory.category)
+            )
             .offset(offset=offset)
             .limit(limit=limit)
             .order_by(Product.id.desc())
         )
         products = (await self.session.execute(stmt)).scalars().all()
-        return ProductDto.many_from_orm(products)
+        return ProductWithCategoryDto.many_from_orm(products)
+
+    async def get_count_records_by_subcategory_id(
+        self,
+        subcategory_id: UUID
+    ) -> list[ProductDto]:
+        stmt = (
+            sa
+            .select(sa.func.count())
+            .where(Product.subcategory_id == subcategory_id)
+            .select_from(Product)
+        )
+        total = (await self.session.execute(stmt)).scalar_one()
+        return total
+
+    async def get_all_by_subcategory_id(
+        self,
+        subcategory_id: UUID,
+        limit: int | None = None,
+        offset: int | None = None
+    ) -> list[ProductWithCategoryDto]:
+        stmt = (
+            sa
+            .select(Product)
+            .where(Product.subcategory_id == subcategory_id)
+            .options(
+                joinedload(Product.subcategory).joinedload(SubCategory.category)
+            )
+            .offset(offset=offset)
+            .limit(limit=limit)
+            .order_by(Product.id.desc())
+        )
+        products = (await self.session.execute(stmt)).scalars().all()
+        return ProductWithCategoryDto.many_from_orm(products)
 
     async def get_count_records(self) -> int:
         stmt = (
@@ -40,6 +80,9 @@ class ProductRepository(BaseRepository):
             sa
             .select(Product)
             .where(Product.id == id)
+            .options(
+                joinedload(Product.subcategory).joinedload(SubCategory.category)
+            )
         )
         product = (await self.session.execute(stmt)).scalar_one_or_none()
         return ProductWithCategoryDto.one_from_orm(product)
@@ -49,6 +92,9 @@ class ProductRepository(BaseRepository):
             sa
             .select(Product)
             .where(Product.slug == slug)
+            .options(
+                joinedload(Product.subcategory).joinedload(SubCategory.category)
+            )
         )
         product = (await self.session.execute(stmt)).scalar_one_or_none()
         return ProductWithCategoryDto.one_from_orm(product)

@@ -11,7 +11,7 @@ class SubCategoryRepository(BaseRepository):
     async def get_all(
         self,
         limit: int | None = None,
-        offset: int | None = None
+        offset: int | None = None,
     ) -> list[SubCategoryDto]:
         stmt = (
             sa
@@ -20,8 +20,35 @@ class SubCategoryRepository(BaseRepository):
             .limit(limit=limit)
             .order_by(SubCategory.id.desc())
         )
-        categories = (await self.session.execute(stmt)).scalars().all()
-        return SubCategoryDto.many_from_orm(categories)
+        subcategories = (await self.session.execute(stmt)).scalars().all()
+        return SubCategoryDto.many_from_orm(subcategories)
+
+    async def get_all_by_category_id(
+        self,
+        category_id: UUID,
+        limit: int | None = None,
+        offset: int | None = None,
+    ) -> list[SubCategoryDto]:
+        stmt = (
+            sa
+            .select(SubCategory)
+            .where(SubCategory.category_id == category_id)
+            .offset(offset=offset)
+            .limit(limit=limit)
+            .order_by(SubCategory.id.desc())
+        )
+        subcategories = (await self.session.execute(stmt)).unique().scalars().all()
+        return SubCategoryDto.many_from_orm(subcategories)
+
+    async def get_count_records_by_category_id(self, category_id: UUID) -> int:
+        stmt = (
+            sa
+            .select(sa.func.count())
+            .where(SubCategory.category_id == category_id)
+            .select_from(SubCategory)
+        )
+        total = (await self.session.execute(stmt)).scalar_one()
+        return total
 
     async def get_one_by_slug(self, slug: str) -> SubCategoryDto | None:
         stmt = (
@@ -29,8 +56,8 @@ class SubCategoryRepository(BaseRepository):
             .select(SubCategory)
             .where(SubCategory.slug == slug)
         )
-        category = (await self.session.execute(stmt)).scalar_one_or_none()
-        return SubCategoryDto.one_from_orm(category)
+        subcategory = (await self.session.execute(stmt)).scalar_one_or_none()
+        return SubCategoryDto.one_from_orm(subcategory)
 
     async def get_count_records(self) -> int:
         stmt = (
@@ -40,15 +67,15 @@ class SubCategoryRepository(BaseRepository):
         )
         total = (await self.session.execute(stmt)).scalar_one()
         return total
-    
+
     async def get_one_by_id(self, id: UUID) -> SubCategoryDto | None:
         stmt = (
             sa
             .select(SubCategory)
             .where(SubCategory.id == id)
         )
-        category = (await self.session.execute(stmt)).scalar_one_or_none()
-        return SubCategoryDto.one_from_orm(category)
+        subcategory = (await self.session.execute(stmt)).scalar_one_or_none()
+        return SubCategoryDto.one_from_orm(subcategory)
 
     async def delete_by_id(self, id: UUID) -> None:
         stmt = (
@@ -81,13 +108,13 @@ class SubCategoryRepository(BaseRepository):
         slug: str,
         image_id: UUID,
     ) -> SubCategoryDto:
-        category = SubCategory(
+        subcategory = SubCategory(
             category_id=str(category_id),
             title=title,
             slug=slug,
             image_id=str(image_id)
         )
-        self.session.add(category)
+        self.session.add(subcategory)
         await self.session.flush()
-        return SubCategoryDto.one_from_orm(category)
+        return SubCategoryDto.one_from_orm(subcategory)
     
