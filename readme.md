@@ -7,11 +7,16 @@
 git clone https://github.com/pirratoz/GroceryStore
 ```
 2. Populating ENVIRONMENT in docker-compose.yaml. The exception is [minio] (ACCESS_KEY, SECRET_KEY)
-3. Raise containers
+3. Certs generate
+```sh
+openssl genrsa -out ./grocery/certs/jwt-private.pem 2048
+openssl rsa -in ./grocery/certs/jwt-private.pem -outform PEM -pubout -out ./grocery/certs/jwt-public.pem
+```
+4. Raise containers
 ```sh
 docker-compose up
 ```
-4.  Go to the minio-web interface, authenticate, create “bucket”, “accsess_key”, “secret_key”, fill out docker-compose.yaml again and restart containers.
+5.  Go to the minio-web interface, authenticate, create “bucket”, “accsess_key”, “secret_key”, fill out docker-compose.yaml again and restart containers.
 
 ## Examples
 
