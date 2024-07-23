@@ -8,6 +8,7 @@ from fastapi import (
 
 from grocery.dependencies import (
     SessionReadOnly,
+    MinIoClient,
     Session,
     IsAdmin,
 )
@@ -106,9 +107,11 @@ async def partial_update_subcategory(
 )
 async def delete_subcategory(
     subcategory_id: UUID,
-    session: Session = Depends()
+    session: Session = Depends(),
+    clientS3: MinIoClient = Depends()
 ) -> Response:
     await SubCategoryDeleteUseCase(
-        subcategory_repo=SubCategoryRepository(session)
-    ).execute(subcategory_id)
+        subcategory_repo=SubCategoryRepository(session),
+        image_repo=ImageRepository(session)
+    ).execute(subcategory_id, clientS3)
     return Response(status_code=204)

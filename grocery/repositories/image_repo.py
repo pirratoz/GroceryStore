@@ -17,6 +17,14 @@ class ImageRepository(BaseRepository):
         image = (await self.session.execute(stmt)).scalar_one_or_none()
         return ImageDto.one_from_orm(image)
 
+    async def delete_by_id(self, id: UUID) -> None:
+        stmt = (
+            sa
+            .delete(Image)
+            .where(Image.id == id)
+        )
+        await self.session.execute(stmt)
+
     async def create(self, *, filename: str) -> ImageDto:
         image = Image(filename=filename)
         self.session.add(image)
