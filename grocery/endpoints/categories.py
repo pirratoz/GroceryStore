@@ -1,6 +1,6 @@
 from uuid import UUID
 
-from fastapi.responses import JSONResponse
+from fastapi.responses import Response
 from fastapi import (
     APIRouter,
     Depends,
@@ -67,7 +67,11 @@ async def get_categories(
     return categories
 
 
-@categories.post("/", dependencies=[Depends(IsAdmin.check)])
+@categories.post(
+    path="/",
+    status_code=201,
+    dependencies=[Depends(IsAdmin.check)]
+)
 async def create_category(
     category_data: CategoryCreateRequest,
     session: Session = Depends()
@@ -92,12 +96,16 @@ async def partial_update_category(
     return category
 
 
-@categories.delete("/{category_id}", dependencies=[Depends(IsAdmin.check)])
+@categories.delete(
+    path="/{category_id}",
+    status_code=204,
+    dependencies=[Depends(IsAdmin.check)]
+)
 async def delete_category(
     category_id: UUID,
     session: Session = Depends()
-) -> CategoryResponse:
+) -> Response:
     await CategoryDeleteUseCase(
         CategoryRepository(session)
     ).execute(category_id)
-    return JSONResponse(content={}, status_code=204)
+    return Response(status_code=204)

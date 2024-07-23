@@ -1,6 +1,6 @@
 from uuid import UUID
 
-from fastapi.responses import JSONResponse
+from fastapi.responses import Response
 from fastapi import (
     APIRouter,
     Depends,
@@ -67,7 +67,11 @@ async def get_product(
     )
 
 
-@products.post("/", dependencies=[Depends(IsAdmin.check)])
+@products.post(
+    path="/",
+    status_code=201,
+    dependencies=[Depends(IsAdmin.check)]
+)
 async def create_product(
     data: ProductCreateRequest,
     session: Session = Depends()
@@ -94,13 +98,17 @@ async def partial_update_product(
     return product
 
 
-@products.delete("/{product_id}", dependencies=[Depends(IsAdmin.check)])
+@products.delete(
+    path="/{product_id}",
+    status_code=204,
+    dependencies=[Depends(IsAdmin.check)]
+)
 async def delete_product(
     product_id: UUID,
     session: Session = Depends()
-) -> ProductResponse:
+) -> Response:
     await ProductDeleteUseCase(
         product_repo=ProductRepository(session),
         image_repo=ImageRepository(session)
     ).execute(product_id)
-    return JSONResponse(content={}, status_code=204)
+    return Response(status_code=204)

@@ -46,7 +46,11 @@ async def download_image(
     )
 
 
-@images.post("/", dependencies=[Depends(IsAdmin.check)])
+@images.post(
+    path="/",
+    status_code=201,
+    dependencies=[Depends(IsAdmin.check)]
+)
 async def upload_image(
     file: UploadFile,
     clientS3: MinIoClient = Depends(),

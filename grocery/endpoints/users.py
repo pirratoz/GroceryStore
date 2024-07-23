@@ -34,7 +34,7 @@ async def get_users(
     return users
 
 
-@users.post("/")
+@users.post("/", status_code=201)
 async def create_user(
     user_data: UserCreateRequest,
     session: Session = Depends()

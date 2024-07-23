@@ -1,4 +1,4 @@
-from fastapi.responses import JSONResponse
+from fastapi.responses import Response
 from fastapi import (
     APIRouter,
     Depends,
@@ -43,7 +43,10 @@ async def get_cart(
     return cart
 
 
-@cart.post("/")
+@cart.post(
+    path="/",
+    status_code=201
+)
 async def create_cart(
     data: CartCreateRequest,
     auth: Auth = Depends(),
@@ -58,12 +61,15 @@ async def create_cart(
     return cart
 
 
-@cart.delete("/")
+@cart.delete(
+    path="/",
+    status_code=204,
+)
 async def delete_cart(
     auth: Auth = Depends(),
     session: Session = Depends()
-) -> CartClearResponse:
+) -> Response:
     await CartDeleteUseCase(
         cart_repo=CartRepository(session)
     ).execute(auth["id"])
-    return JSONResponse(content={}, status_code=204)
+    return Response(status_code=204)
