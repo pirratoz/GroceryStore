@@ -2,21 +2,19 @@ services:
     postgresql:
         container_name: GroceryStorePostgresql
         image: library/postgres:16.3-alpine3.20
-        ports:
-            - 5432:5432
         volumes:
             - $PWD/.local/data/pg16:/var/lib/postgresql/data
         environment:
             - POSTGRES_USER=grocery
             - POSTGRES_PASSWORD=grocery
             - POSTGRES_DB=grocery
+        restart: always
         networks:
             - custom
     minio:
         container_name: MinIO
         image: quay.io/minio/minio:latest
         ports:
-            - 9000:9000
             - 9001:9001
         volumes:
             - $PWD/.local/data/minio:/data
@@ -24,7 +22,39 @@ services:
             - MINIO_ROOT_USER=grocery
             - MINIO_ROOT_PASSWORD=grocery8900
             - MINIO_DEFAULT_BUCKETS=bucket1
+        restart: always
         command: server /data --console-address ":9001"
+        networks:
+            - custom
+    restapi:
+        container_name: RestApi
+        build: .
+        ports:
+            - 8001:8001
+        environment:
+            - PG_HOST=GroceryStorePostgresql
+            - PG_PORT=5432
+            - PG_USER=grocery
+            - PG_PASS=grocery
+            - PG_NAME=grocery
+            - PG_POOL_SIZE=5
+            - JWT_PUBLIC_KEY_PATH=grocery/certs/jwt-public.pem
+            - JWT_PRIVATE_KEY_PATH=grocery/certs/jwt-private.pem
+            - JWT_ACCESS_TOKEN_EXP_MINUTES=60
+            - JWT_ALGORITHM=RS256
+            - MINIO_HOST=MinIO:9000
+            - MINIO_USER=grocery
+            - MINIO_PASS=grocery8900
+            - MINIO_BUCKET=bucket1
+            - MINIO_ACCESS_KEY=ABDfaHnAkFbFPLG9XEbR
+            - MINIO_SECRET_KEY=9i0do8eaUyCdSROSLcRh5lXA5pP2ZVkHpTYIx7Pk
+        restart: always
+        command: >
+            sh -c "alembic upgrade head && 
+                   python3.10 main.py"
+        depends_on:
+            - postgresql
+            - minio
         networks:
             - custom
 

@@ -52,7 +52,11 @@ def main() -> None:
     setup_dependency(app, postgresql, s3)
     include_endpoints(app)
 
-    uvicorn_run(app)
+    uvicorn_run(
+        app=app,
+        host="0.0.0.0",
+        port=8001
+    )
 
 
 if __name__ == "__main__":
