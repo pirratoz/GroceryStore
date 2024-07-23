@@ -18,7 +18,7 @@ docker-compose up
 ```
 5.  Go to the minio-web interface, authenticate, create “bucket”, “accsess_key”, “secret_key”, fill out docker-compose.yaml again and restart containers.
 
-RESTAPI: http://127.0.0.1:8001/docs
+RESTAPI: http://127.0.0.1:8001/docs  
 MINIO: http://127.0.0.1:9001/login
 
 ## Examples
